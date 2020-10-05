@@ -1,22 +1,54 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"net/http"
 	"os"
-	"strconv"
+
+	"github.com/google/goterm/term"
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println("Could not parse command line arguments: ", os.Args[1:])
+	descriptionFlag := flag.Bool("long", false, "Print a long description of the HTTP status code")
+	noColor := flag.Bool("nocolor", false, "Disable color in output")
+	flag.Parse()
+	args := flag.Args()
+
+	if flag.NArg() == 0 {
+		flag.Usage()
 		os.Exit(1)
 	}
-	arg := os.Args[1]
-	code, err := strconv.Atoi(arg)
-	if err != nil {
-		fmt.Println("Code is not an integer: ", err)
+
+	code, ok := codes[args[0]]
+	if !ok {
+		fmt.Println("Unknown HTTP code")
 		os.Exit(1)
 	}
-	fmt.Println(http.StatusText(code))
+
+	msg := code.Message
+	if !*noColor {
+		msg = addColor(args[0], code.Message)
+	}
+
+	fmt.Println(msg)
+	if *descriptionFlag {
+		fmt.Printf("\n%s\n", code.Description)
+	}
+}
+
+func addColor(code, message string) string {
+	switch string(code[0]) {
+	case "1":
+		return term.Bluef(message)
+	case "2":
+		return term.Greenf(message)
+	case "3":
+		return term.Cyanf(message)
+	case "4":
+		return term.Yellowf(message)
+	case "5":
+		return term.Redf(message)
+	default:
+		return message
+	}
 }

@@ -18,6 +18,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"sort"
 
 	"github.com/paulfarver/wttp/pkg/codes"
 	"github.com/spf13/cobra"
@@ -56,8 +57,13 @@ func init() {
 		Short: "Prints all codes",
 		Long:  "Lists all the available http codes, and their message",
 		Run: func(cmd *cobra.Command, args []string) {
-			for c, co := range codes.Codes {
-				renderShort(c, co)
+			keys := make([]string, 0, len(codes.Codes))
+			for k := range codes.Codes {
+				keys = append(keys, k)
+			}
+			sort.Strings(keys)
+			for _, k := range keys {
+				renderShort(k, codes.Codes[k])
 			}
 		},
 	})

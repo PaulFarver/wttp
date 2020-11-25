@@ -1,9 +1,11 @@
-package main
+package codes
 
-var codes = map[string]struct {
+type Code struct {
 	Message     string `yaml:"message"`
 	Description string `yaml:"description"`
-}{
+}
+
+var Codes = map[string]Code{
 	"100": {
 		Message:     "Continue",
 		Description: "The server has received the request headers, and the client should proceed to send the request body.",

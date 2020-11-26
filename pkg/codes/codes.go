@@ -171,8 +171,22 @@ var Codes = map[string]Code{
 		Description: "The server cannot meet the requirements of the Expect request-header field.",
 	},
 	"418": {
-		Message:     "I'm a teapot",
-		Description: "Any attempt to brew coffee with a teapot should result in the error code '418 I'm a teapot'. The resulting entity body MAY be short and stout.",
+		Message: "I'm a teapot",
+		Description: `Any attempt to brew coffee with a teapot should result in the error code '418 I'm a teapot'. The resulting entity body MAY be short and stout.
+        ________                                       __     
+        |        \                                     |  \    
+         \▓▓▓▓▓▓▓▓ ______   ______   ______   ______  _| ▓▓_   
+           | ▓▓   /      \ |      \ /      \ /      \|   ▓▓ \  
+           | ▓▓  |  ▓▓▓▓▓▓\ \▓▓▓▓▓▓\  ▓▓▓▓▓▓\  ▓▓▓▓▓▓\\▓▓▓▓▓▓  
+           | ▓▓  | ▓▓    ▓▓/      ▓▓ ▓▓  | ▓▓ ▓▓  | ▓▓ | ▓▓ __ 
+           | ▓▓  | ▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓ ▓▓__/ ▓▓ ▓▓__/ ▓▓ | ▓▓|  \
+           | ▓▓   \▓▓     \\▓▓    ▓▓ ▓▓    ▓▓\▓▓    ▓▓  \▓▓  ▓▓
+            \▓▓    \▓▓▓▓▓▓▓ \▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓  \▓▓▓▓▓▓    \▓▓▓▓ 
+                                   | ▓▓                        
+                                   | ▓▓                        
+                                    \▓▓                        
+
+`,
 	},
 	"419": {
 		Message:     "Page Expired (Laravel Framework)",

@@ -173,7 +173,7 @@ var Codes = map[string]Code{
 	"418": {
 		Message: "I'm a teapot",
 		Description: `Any attempt to brew coffee with a teapot should result in the error code '418 I'm a teapot'. The resulting entity body MAY be short and stout.
-        ________                                       __     
+         ________                                       __     
         |        \                                     |  \    
          \▓▓▓▓▓▓▓▓ ______   ______   ______   ______  _| ▓▓_   
            | ▓▓   /      \ |      \ /      \ /      \|   ▓▓ \  

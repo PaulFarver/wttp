@@ -5,13 +5,21 @@
 ```shell
 $ go get github.com/paulfarver/wttp
 $ wttp 502
-Bad Gateway
-$ wttp -long 502
-Bad Gateway
-
+502 - Bad Gateway
 The server was acting as a gateway or proxy and received an invalid response from the upstream server.
-$ wttp -long 5xx
-Server Error
-
-5xx error codes indicate that an error or unresolvable request occurred on the server side, whether that is a proxy or the origin host.
+$ wttp list
+100 - Continue
+101 - Switching Protocols
+102 - Processing
+103 - Early Hints
+1xx - Information
+200 - OK
+201 - Created
+202 - Accepted
+...
+526 - Invalid SSL Certificate
+527 - Railgun Listener to Origin Error
+530 - Origin DNS Error
+598 - Network Read Timeout Error
+5xx - Server Error
 ```

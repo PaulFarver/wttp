@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/paulfarver/wttp/pkg/codes"
 	"github.com/spf13/cobra"
@@ -30,16 +31,13 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "wttp",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+	Short: "A small tool to find appropriate http codes",
+	Long: `A tool you can use to figure out:
+- What http status code you want to use in an endpoint
+- What an http code means, when you're not sure`,
+	Run: func(cmd *cobra.Command, args []string) {
+		listCommand()
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -53,9 +51,10 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(&cobra.Command{
-		Use:   "list",
-		Short: "Prints all codes",
-		Long:  "Lists all the available http codes, and their message",
+		Use:     "list",
+		Short:   "Prints all codes",
+		Long:    "Lists all the available http codes, and their message",
+		Aliases: []string{"l"},
 		Run: func(cmd *cobra.Command, args []string) {
 			keys := make([]string, 0, len(codes.Codes))
 			for k := range codes.Codes {
@@ -64,6 +63,21 @@ func init() {
 			sort.Strings(keys)
 			for _, k := range keys {
 				renderShort(k, codes.Codes[k])
+			}
+		},
+	})
+
+	rootCmd.AddCommand(&cobra.Command{
+		Use:     "search",
+		Short:   "Searches among the codes",
+		Long:    "Finds codes with a specified string in the code, short or long description",
+		Args:    cobra.MinimumNArgs(1),
+		Aliases: []string{"s"},
+		Run: func(cmd *cobra.Command, args []string) {
+			for key, code := range codes.Codes {
+				if strings.Contains(strings.ToLower(fmt.Sprintf("%s - %s\n%s\n", key, code.Message, code.Description)), strings.ToLower(args[0])) {
+					renderLong(key, code)
+				}
 			}
 		},
 	})
@@ -79,6 +93,17 @@ func init() {
 				renderLong(m, mo)
 			},
 		})
+	}
+}
+
+func listCommand() {
+	keys := make([]string, 0, len(codes.Codes))
+	for k := range codes.Codes {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		renderShort(k, codes.Codes[k])
 	}
 }
 
